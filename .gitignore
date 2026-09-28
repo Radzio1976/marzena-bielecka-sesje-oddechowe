@@ -1,0 +1,27 @@
+# WordPress
+wp-config.php
+
+# Duplicator
+wp-content/backups-dup-lite/
+wp-content/plugins/duplicator/
+
+# TRX Addons cache
+wp-content/uploads/trx_addons/cache/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+
+# Composer
+vendor/
