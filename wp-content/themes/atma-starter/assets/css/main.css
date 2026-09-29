@@ -516,3 +516,100 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   KONTAKT
+========================================== */
+
+.atma-contact {
+  background: #e8ded0;
+  padding: 120px 0;
+  margin-top: 110px;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 300px 480px;
+  justify-content: center;
+  align-items: center;
+  gap: 72px;
+}
+
+.contact-image {
+  width: 300px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.contact-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.contact-kicker {
+  color: #b88a44;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+}
+
+.contact-content {
+  max-width: 480px;
+}
+
+.contact-content h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 56px;
+  line-height: 1;
+  color: #2f2a26;
+  margin: 18px 0 24px;
+}
+
+.contact-content p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #5f5954;
+  margin-bottom: 34px;
+  max-width: 48ch;
+}
+
+.contact-phone {
+  border-left: 3px solid #b88a44;
+  padding-left: 18px;
+  margin-bottom: 36px;
+}
+
+.contact-phone span {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8a7458;
+  margin-bottom: 6px;
+}
+
+.contact-phone a {
+  font-size: 30px;
+  font-weight: 600;
+  color: #2f2a26;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .contact-card {
+    grid-template-columns: 1fr;
+    padding: 36px;
+    gap: 36px;
+  }
+
+  .contact-content h2 {
+    font-size: 42px;
+  }
+
+  .contact-phone a {
+    font-size: 24px;
+  }
+}
