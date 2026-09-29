@@ -4,20 +4,18 @@
 
         <div class="hero-left">
             <span class="hero-kicker">
-                MARZENA BIELECKA • SESJE ODDECHOWE
+                <?php echo esc_html(get_theme_mod('atma_hero_kicker', 'MARZENA BIELECKA • SESJE ODDECHOWE')); ?>
             </span>
 
-            <h1>Oddech, który prowadzi do wewnętrznego spokoju</h1>
+            <h1><?php echo esc_html(get_theme_mod('atma_hero_title', 'Oddech, który prowadzi do wewnętrznego spokoju')); ?></h1>
 
             <p>
-                Indywidualne sesje oddechowe, medytacja i świadoma
-                praca z energią. Odkryj moc głębokiego oddechu
-                i odzyskaj równowagę.
+                <?php echo esc_html(get_theme_mod('atma_hero_description', 'Indywidualne sesje oddechowe, medytacja i świadoma praca z energią. Odkryj moc głębokiego oddechu i odzyskaj równowagę.')); ?>
             </p>
 
             <div class="hero-buttons">
-                <a href="#kontakt" class="atma-btn">Umów sesję</a>
-                <a href="#metoda" class="atma-btn-outline">Poznaj metodę</a>
+                <a href="<?php echo esc_url(get_theme_mod('atma_hero_button_primary_url', '#kontakt')); ?>" class="atma-btn"><?php echo esc_html(get_theme_mod('atma_hero_button_primary_text', 'Umów sesję')); ?></a>
+                <a href="<?php echo esc_url(get_theme_mod('atma_hero_button_secondary_url', '#metoda')); ?>" class="atma-btn-outline"><?php echo esc_html(get_theme_mod('atma_hero_button_secondary_text', 'Poznaj metodę')); ?></a>
             </div>
         </div>
 

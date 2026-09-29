@@ -40,6 +40,64 @@ add_action('after_setup_theme', function () {
 
 function atma_customize_register($wp_customize) {
 
+    /* ===== HERO ===== */
+
+    $wp_customize->add_section('atma_hero', [
+        'title'    => 'Atma Starter – Hero',
+        'priority' => 29,
+    ]);
+
+    $hero_settings = [
+        'atma_hero_kicker' => [
+            'label'   => 'Nadtytuł',
+            'default' => 'MARZENA BIELECKA • SESJE ODDECHOWE',
+            'type'    => 'text',
+        ],
+        'atma_hero_title' => [
+            'label'   => 'Tytuł',
+            'default' => 'Oddech, który prowadzi do wewnętrznego spokoju',
+            'type'    => 'textarea',
+        ],
+        'atma_hero_description' => [
+            'label'   => 'Opis',
+            'default' => 'Indywidualne sesje oddechowe, medytacja i świadoma praca z energią. Odkryj moc głębokiego oddechu i odzyskaj równowagę.',
+            'type'    => 'textarea',
+        ],
+        'atma_hero_button_primary_text' => [
+            'label'   => 'Tekst głównego przycisku',
+            'default' => 'Umów sesję',
+            'type'    => 'text',
+        ],
+        'atma_hero_button_primary_url' => [
+            'label'   => 'Adres głównego przycisku',
+            'default' => '#kontakt',
+            'type'    => 'url',
+        ],
+        'atma_hero_button_secondary_text' => [
+            'label'   => 'Tekst drugiego przycisku',
+            'default' => 'Poznaj metodę',
+            'type'    => 'text',
+        ],
+        'atma_hero_button_secondary_url' => [
+            'label'   => 'Adres drugiego przycisku',
+            'default' => '#metoda',
+            'type'    => 'url',
+        ],
+    ];
+
+    foreach ($hero_settings as $setting_id => $setting) {
+        $wp_customize->add_setting($setting_id, [
+            'default'           => $setting['default'],
+            'sanitize_callback' => $setting['type'] === 'url' ? 'esc_url_raw' : ($setting['type'] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field'),
+        ]);
+
+        $wp_customize->add_control($setting_id, [
+            'label'   => $setting['label'],
+            'section' => 'atma_hero',
+            'type'    => $setting['type'],
+        ]);
+    }
+
     /* ===== OFERTA ===== */
 
     $wp_customize->add_section('atma_offer', [
