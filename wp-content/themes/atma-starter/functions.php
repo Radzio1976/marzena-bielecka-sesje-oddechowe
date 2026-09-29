@@ -190,7 +190,10 @@ function atma_customize_register($wp_customize) {
         'priority' => 31,
     ]);
 
-    $wp_customize->add_setting('atma_about_image');
+    $wp_customize->add_setting('atma_about_image', [
+        'default'           => 0,
+        'sanitize_callback' => 'absint',
+    ]);
 
     $wp_customize->add_control(
         new WP_Customize_Media_Control(
@@ -203,6 +206,52 @@ function atma_customize_register($wp_customize) {
             ]
         )
     );
+
+    $about_settings = [
+        'atma_about_kicker' => [
+            'label'   => 'Nadtytuł',
+            'default' => 'O MNIE',
+            'type'    => 'text',
+        ],
+        'atma_about_title' => [
+            'label'   => 'Tytuł',
+            'default' => 'Poznaj Marzenę Bielecką',
+            'type'    => 'text',
+        ],
+        'atma_about_paragraph1' => [
+            'label'   => 'Akapit 1',
+            'default' => 'Oddech jest dla mnie drogą do odzyskiwania kontaktu z ciałem, emocjami i wewnętrznym spokojem. Tworzę bezpieczną przestrzeń, w której możesz zatrzymać się i naprawdę usłyszeć siebie.',
+            'type'    => 'textarea',
+        ],
+        'atma_about_paragraph2' => [
+            'label'   => 'Akapit 2',
+            'default' => 'Łączę świadomą pracę z oddechem, uważność oraz indywidualne podejście do każdej osoby. Każde spotkanie jest inne, ponieważ każda historia jest wyjątkowa.',
+            'type'    => 'textarea',
+        ],
+        'atma_about_button_text' => [
+            'label'   => 'Tekst przycisku',
+            'default' => 'Poznaj moją historię',
+            'type'    => 'text',
+        ],
+        'atma_about_button_url' => [
+            'label'   => 'Link przycisku',
+            'default' => '#historia',
+            'type'    => 'url',
+        ],
+    ];
+
+    foreach ($about_settings as $setting_id => $setting) {
+        $wp_customize->add_setting($setting_id, [
+            'default'           => $setting['default'],
+            'sanitize_callback' => $setting['type'] === 'url' ? 'esc_url_raw' : ($setting['type'] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field'),
+        ]);
+
+        $wp_customize->add_control($setting_id, [
+            'label'   => $setting['label'],
+            'section' => 'atma_about',
+            'type'    => $setting['type'],
+        ]);
+    }
 
 }
 
