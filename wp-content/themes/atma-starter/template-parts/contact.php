@@ -7,7 +7,12 @@
             <div class="contact-image">
 
                 <?php
-                $image_id = get_theme_mod('atma_about_image');
+                $contact_image_url = get_theme_mod('atma_contact_image');
+                $image_id = $contact_image_url ? attachment_url_to_postid($contact_image_url) : 0;
+
+                if (!$image_id) {
+                    $image_id = absint(get_theme_mod('atma_about_image'));
+                }
 
                 if ($image_id) :
                     echo wp_get_attachment_image(
@@ -23,26 +28,26 @@
 
             <div class="contact-content">
 
-                <span class="contact-kicker">KONTAKT</span>
+                <span class="contact-kicker"><?php echo esc_html(get_theme_mod('atma_contact_kicker', 'KONTAKT')); ?></span>
 
-                <h2>Spotkajmy się online</h2>
+                <h2><?php echo esc_html(get_theme_mod('atma_contact_title', 'Spotkajmy się online')); ?></h2>
 
                 <p>
-                    Zadzwoń lub wyślij SMS. Chętnie odpowiem na Twoje pytania i wspólnie znajdziemy najlepszy termin pierwszej sesji online.
+                    <?php echo esc_html(get_theme_mod('atma_contact_description', 'Zadzwoń lub wyślij SMS. Chętnie odpowiem na Twoje pytania i wspólnie znajdziemy najlepszy termin pierwszej sesji online.')); ?>
                 </p>
 
                 <div class="contact-phone">
 
                     <span>Telefon</span>
 
-                    <a href="tel:+48600000000">
-                        +48 506 853 033
+                    <a href="<?php echo esc_url('tel:' . preg_replace('/[^0-9+]/', '', get_theme_mod('atma_contact_phone', '+48 506 853 033')), array_merge(wp_allowed_protocols(), ['tel'])); ?>">
+                        <?php echo esc_html(get_theme_mod('atma_contact_phone', '+48 506 853 033')); ?>
                     </a>
 
                 </div>
 
-                <a href="tel:+48600000000" class="atma-btn">
-                    Zadzwoń lub wyślij SMS
+                <a href="<?php echo esc_url(get_theme_mod('atma_contact_button_url', 'tel:+48506853033'), array_merge(wp_allowed_protocols(), ['tel'])); ?>" class="atma-btn">
+                    <?php echo esc_html(get_theme_mod('atma_contact_button_text', 'Zadzwoń lub wyślij SMS')); ?>
                 </a>
 
             </div>

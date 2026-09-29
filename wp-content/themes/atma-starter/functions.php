@@ -253,6 +253,81 @@ function atma_customize_register($wp_customize) {
         ]);
     }
 
+    /* ===== KONTAKT ===== */
+
+    $wp_customize->add_section('atma_contact', [
+        'title'    => 'Atma Starter – Kontakt',
+        'priority' => 32,
+    ]);
+
+    $wp_customize->add_setting('atma_contact_image', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'atma_contact_image',
+            [
+                'label'   => 'Zdjęcie kontaktowe',
+                'section' => 'atma_contact',
+            ]
+        )
+    );
+
+    $contact_settings = [
+        'atma_contact_kicker' => [
+            'label'   => 'Nadtytuł',
+            'default' => 'KONTAKT',
+            'type'    => 'text',
+        ],
+        'atma_contact_title' => [
+            'label'   => 'Tytuł',
+            'default' => 'Spotkajmy się online',
+            'type'    => 'text',
+        ],
+        'atma_contact_description' => [
+            'label'   => 'Opis',
+            'default' => 'Zadzwoń lub wyślij SMS. Chętnie odpowiem na Twoje pytania i wspólnie znajdziemy najlepszy termin pierwszej sesji online.',
+            'type'    => 'textarea',
+        ],
+        'atma_contact_phone' => [
+            'label'   => 'Numer telefonu',
+            'default' => '+48 506 853 033',
+            'type'    => 'text',
+        ],
+        'atma_contact_button_text' => [
+            'label'   => 'Tekst przycisku',
+            'default' => 'Zadzwoń lub wyślij SMS',
+            'type'    => 'text',
+        ],
+        'atma_contact_button_url' => [
+            'label'   => 'Link przycisku',
+            'default' => 'tel:+48506853033',
+            'type'    => 'url',
+        ],
+    ];
+
+    foreach ($contact_settings as $setting_id => $setting) {
+        $sanitize_callback = $setting['type'] === 'url'
+            ? function ($value) {
+                return esc_url_raw($value, array_merge(wp_allowed_protocols(), ['tel']));
+            }
+            : ($setting['type'] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field');
+
+        $wp_customize->add_setting($setting_id, [
+            'default'           => $setting['default'],
+            'sanitize_callback' => $sanitize_callback,
+        ]);
+
+        $wp_customize->add_control($setting_id, [
+            'label'   => $setting['label'],
+            'section' => 'atma_contact',
+            'type'    => $setting['type'],
+        ]);
+    }
+
 }
 
 add_action('customize_register', 'atma_customize_register');
