@@ -85,3 +85,93 @@ function atma_customize_register($wp_customize) {
 }
 
 add_action('customize_register', 'atma_customize_register');
+
+/* ==========================================
+   CUSTOM POST TYPE — OPINIE
+========================================== */
+
+function atma_register_testimonials() {
+
+    register_post_type('opinia', [
+
+        'labels' => [
+            'name'          => 'Opinie',
+            'singular_name' => 'Opinia',
+            'add_new_item'  => 'Dodaj opinię',
+            'edit_item'     => 'Edytuj opinię',
+        ],
+
+        'public'       => true,
+        'show_in_rest' => true,
+        'menu_icon'    => 'dashicons-format-quote',
+'supports' => ['title', 'editor'],
+        'has_archive'  => false,
+
+    ]);
+
+}
+
+add_action('init', 'atma_register_testimonials');
+
+/* ==========================================
+   META BOX — OPINIA
+========================================== */
+
+function atma_add_testimonial_meta() {
+
+    add_meta_box(
+        'atma_testimonial',
+        'Dane klienta',
+        'atma_testimonial_callback',
+        'opinia'
+    );
+
+}
+
+add_action('add_meta_boxes', 'atma_add_testimonial_meta');
+
+function atma_testimonial_callback($post) {
+
+    $name   = get_post_meta($post->ID, 'client_name', true);
+    $city   = get_post_meta($post->ID, 'client_city', true);
+    $rating = get_post_meta($post->ID, 'client_rating', true);
+
+    ?>
+
+    <p>
+        <label>Imię i nazwisko</label><br>
+        <input type="text" name="client_name" value="<?php echo esc_attr($name); ?>" style="width:100%;">
+    </p>
+
+    <p>
+        <label>Miasto</label><br>
+        <input type="text" name="client_city" value="<?php echo esc_attr($city); ?>" style="width:100%;">
+    </p>
+
+    <p>
+        <label>Ocena</label><br>
+        <select name="client_rating">
+            <?php for($i=5;$i>=1;$i--) : ?>
+                <option value="<?php echo $i; ?>" <?php selected($rating,$i); ?>>
+                    <?php echo $i; ?> ★
+                </option>
+            <?php endfor; ?>
+        </select>
+    </p>
+
+    <?php
+}
+
+function atma_save_testimonial($post_id) {
+
+    if(isset($_POST['client_name']))
+        update_post_meta($post_id,'client_name',sanitize_text_field($_POST['client_name']));
+
+    if(isset($_POST['client_city']))
+        update_post_meta($post_id,'client_city',sanitize_text_field($_POST['client_city']));
+
+    if(isset($_POST['client_rating']))
+        update_post_meta($post_id,'client_rating',intval($_POST['client_rating']));
+}
+
+add_action('save_post_opinia','atma_save_testimonial');
