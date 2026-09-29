@@ -105,7 +105,71 @@ function atma_customize_register($wp_customize) {
         'priority' => 30,
     ]);
 
-    $wp_customize->add_setting('atma_offer_image');
+    $offer_settings = [
+        'atma_offer_kicker' => [
+            'label'   => 'Nadtytuł',
+            'default' => 'INDYWIDUALNE SESJE ODDECHOWE',
+            'type'    => 'text',
+        ],
+        'atma_offer_title' => [
+            'label'   => 'Tytuł',
+            'default' => 'Przestrzeń, w której ciało może naprawdę odetchnąć',
+            'type'    => 'text',
+        ],
+        'atma_offer_description' => [
+            'label'   => 'Opis',
+            'default' => 'Każda sesja jest indywidualnym spotkaniem, podczas którego poprzez świadomy oddech, uważność i delikatną pracę z ciałem odnajdujesz więcej spokoju, lekkości i kontaktu ze sobą.',
+            'type'    => 'textarea',
+        ],
+        'atma_offer_feature1_title' => [
+            'label'   => 'Tytuł pierwszej korzyści',
+            'default' => 'Sesja indywidualna',
+            'type'    => 'text',
+        ],
+        'atma_offer_feature1_text' => [
+            'label'   => 'Opis pierwszej korzyści',
+            'default' => 'To spokojna, kameralna przestrzeń, w której możesz zatrzymać się, rozluźnić napięcia i odzyskać kontakt z własnym oddechem.',
+            'type'    => 'textarea',
+        ],
+        'atma_offer_feature2_title' => [
+            'label'   => 'Tytuł drugiej korzyści',
+            'default' => 'Dla kogo?',
+            'type'    => 'text',
+        ],
+        'atma_offer_feature2_text' => [
+            'label'   => 'Opis drugiej korzyści',
+            'default' => 'Dla osób odczuwających stres, przewlekłe napięcie, zmęczenie emocjonalne lub pragnących głębiej poznać siebie poprzez pracę z oddechem.',
+            'type'    => 'textarea',
+        ],
+        'atma_offer_button_text' => [
+            'label'   => 'Tekst przycisku',
+            'default' => 'Umów pierwszą sesję',
+            'type'    => 'text',
+        ],
+        'atma_offer_button_url' => [
+            'label'   => 'Adres przycisku',
+            'default' => '#kontakt',
+            'type'    => 'url',
+        ],
+    ];
+
+    foreach ($offer_settings as $setting_id => $setting) {
+        $wp_customize->add_setting($setting_id, [
+            'default'           => $setting['default'],
+            'sanitize_callback' => $setting['type'] === 'url' ? 'esc_url_raw' : ($setting['type'] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field'),
+        ]);
+
+        $wp_customize->add_control($setting_id, [
+            'label'   => $setting['label'],
+            'section' => 'atma_offer',
+            'type'    => $setting['type'],
+        ]);
+    }
+
+    $wp_customize->add_setting('atma_offer_image', [
+        'default'           => 0,
+        'sanitize_callback' => 'absint',
+    ]);
 
     $wp_customize->add_control(
         new WP_Customize_Media_Control(

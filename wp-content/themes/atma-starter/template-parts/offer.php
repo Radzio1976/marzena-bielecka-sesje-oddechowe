@@ -4,15 +4,13 @@
 
         <div class="offer-heading">
             <span class="offer-kicker">
-                INDYWIDUALNE SESJE ODDECHOWE
+                <?php echo esc_html(get_theme_mod('atma_offer_kicker', 'INDYWIDUALNE SESJE ODDECHOWE')); ?>
             </span>
 
-            <h2>Przestrzeń, w której ciało może naprawdę odetchnąć</h2>
+            <h2><?php echo esc_html(get_theme_mod('atma_offer_title', 'Przestrzeń, w której ciało może naprawdę odetchnąć')); ?></h2>
 
             <p>
-                Każda sesja jest indywidualnym spotkaniem, podczas którego
-                poprzez świadomy oddech, uważność i delikatną pracę z ciałem
-                odnajdujesz więcej spokoju, lekkości i kontaktu ze sobą.
+                <?php echo esc_html(get_theme_mod('atma_offer_description', 'Każda sesja jest indywidualnym spotkaniem, podczas którego poprzez świadomy oddech, uważność i delikatną pracę z ciałem odnajdujesz więcej spokoju, lekkości i kontaktu ze sobą.')); ?>
             </p>
         </div>
 
@@ -44,27 +42,23 @@
         <div class="offer-content">
 
             <div class="offer-card">
-                <h3>Sesja indywidualna</h3>
+                <h3><?php echo esc_html(get_theme_mod('atma_offer_feature1_title', 'Sesja indywidualna')); ?></h3>
 
                 <p>
-                    To spokojna, kameralna przestrzeń, w której możesz
-                    zatrzymać się, rozluźnić napięcia i odzyskać kontakt
-                    z własnym oddechem.
+                    <?php echo esc_html(get_theme_mod('atma_offer_feature1_text', 'To spokojna, kameralna przestrzeń, w której możesz zatrzymać się, rozluźnić napięcia i odzyskać kontakt z własnym oddechem.')); ?>
                 </p>
             </div>
 
             <div class="offer-card">
-                <h3>Dla kogo?</h3>
+                <h3><?php echo esc_html(get_theme_mod('atma_offer_feature2_title', 'Dla kogo?')); ?></h3>
 
                 <p>
-                    Dla osób odczuwających stres, przewlekłe napięcie,
-                    zmęczenie emocjonalne lub pragnących głębiej poznać siebie
-                    poprzez pracę z oddechem.
+                    <?php echo esc_html(get_theme_mod('atma_offer_feature2_text', 'Dla osób odczuwających stres, przewlekłe napięcie, zmęczenie emocjonalne lub pragnących głębiej poznać siebie poprzez pracę z oddechem.')); ?>
                 </p>
             </div>
 
-            <a href="#kontakt" class="atma-btn">
-                Umów pierwszą sesję
+            <a href="<?php echo esc_url(get_theme_mod('atma_offer_button_url', '#kontakt')); ?>" class="atma-btn">
+                <?php echo esc_html(get_theme_mod('atma_offer_button_text', 'Umów pierwszą sesję')); ?>
             </a>
 
         </div>
