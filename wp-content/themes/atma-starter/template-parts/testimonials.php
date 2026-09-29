@@ -1,7 +1,35 @@
 <?php
-$name   = get_post_meta(get_the_ID(),'client_name',true);
-$city   = get_post_meta(get_the_ID(),'client_city',true);
-$rating = get_post_meta(get_the_ID(),'client_rating',true);
+$testimonial_defaults = [
+    1 => [
+        'text'   => 'To było naprawdę niesamowite doświadczenie.',
+        'name'   => 'Agata Nowak',
+        'city'   => 'Jelenia Góra',
+        'rating' => 5,
+    ],
+    2 => [
+        'text'   => 'Marzena to wspaniała terapeutka. Sesja była naprawdę mocna.',
+        'name'   => 'Stefan Koziński',
+        'city'   => 'Golub-Dobrzyń',
+        'rating' => 5,
+    ],
+    3 => [
+        'text'   => 'To była super sesja.',
+        'name'   => 'Anna Kowalska',
+        'city'   => 'Warszawa',
+        'rating' => 5,
+    ],
+];
+
+$testimonials = [];
+
+foreach ($testimonial_defaults as $index => $defaults) {
+    $testimonials[] = [
+        'text'   => get_theme_mod("atma_testimonial_{$index}_text", $defaults['text']),
+        'name'   => get_theme_mod("atma_testimonial_{$index}_name", $defaults['name']),
+        'city'   => get_theme_mod("atma_testimonial_{$index}_city", $defaults['city']),
+        'rating' => min(5, max(1, absint(get_theme_mod("atma_testimonial_{$index}_rating", $defaults['rating'])))),
+    ];
+}
 ?>
 
 <section class="atma-testimonials" id="opinie">
@@ -9,63 +37,46 @@ $rating = get_post_meta(get_the_ID(),'client_rating',true);
     <div class="atma-container">
 
         <div class="testimonials-heading">
-            <span class="testimonials-kicker">OPINIE KLIENTÓW</span>
+            <span class="testimonials-kicker"><?php echo esc_html(get_theme_mod('atma_testimonials_kicker', 'OPINIE KLIENTÓW')); ?></span>
 
-            <h2>Co mówią osoby po sesjach?</h2>
+            <h2><?php echo esc_html(get_theme_mod('atma_testimonials_title', 'Co mówią osoby po sesjach?')); ?></h2>
 
             <p>
-                Każda historia jest inna, ale wszystkie łączy jedno —
-                większy spokój, lekkość i głębszy kontakt ze sobą.
+                <?php echo esc_html(get_theme_mod('atma_testimonials_description', 'Każda historia jest inna, ale wszystkie łączy jedno — większy spokój, lekkość i głębszy kontakt ze sobą.')); ?>
             </p>
         </div>
 
         <div class="testimonials-grid">
 
-            <?php
-
-            $opinie = new WP_Query([
-                'post_type'      => 'opinia',
-                'posts_per_page' => 3,
-            ]);
-
-            if ($opinie->have_posts()) :
-
-                while ($opinie->have_posts()) :
-                    $opinie->the_post();
-
-                    $name   = get_post_meta(get_the_ID(),'client_name',true);
-                    $city   = get_post_meta(get_the_ID(),'client_city',true);
-                    $rating = intval(get_post_meta(get_the_ID(),'client_rating',true));
-            ?>
+            <?php foreach ($testimonials as $testimonial) : ?>
 
                 <article class="testimonial-card">
 
                     <div class="testimonial-stars">
-                        <?php echo str_repeat('★', $rating); ?>
+                        <?php
+                        for ($star = 0; $star < $testimonial['rating']; $star++) {
+                            echo '★';
+                        }
+                        ?>
                     </div>
 
                     <div class="testimonial-text">
-                        <?php the_content(); ?>
+                        <?php echo esc_html($testimonial['text']); ?>
                     </div>
 
                     <div class="testimonial-footer">
                         <div class="testimonial-author">
-                            <?php echo esc_html($name); ?>
+                            <?php echo esc_html($testimonial['name']); ?>
                         </div>
 
                         <div class="testimonial-city">
-                            <?php echo esc_html($city); ?>
+                            <?php echo esc_html($testimonial['city']); ?>
                         </div>
                     </div>
 
                 </article>
 
-            <?php
-                endwhile;
-                wp_reset_postdata();
-
-            endif;
-            ?>
+            <?php endforeach; ?>
 
         </div>
 

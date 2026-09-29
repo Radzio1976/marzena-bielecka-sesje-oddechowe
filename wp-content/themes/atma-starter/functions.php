@@ -328,6 +328,120 @@ function atma_customize_register($wp_customize) {
         ]);
     }
 
+    /* ===== OPINIE ===== */
+
+    $wp_customize->add_section('atma_testimonials', [
+        'title'    => 'Atma Starter – Opinie',
+        'priority' => 33,
+    ]);
+
+    $testimonials_settings = [
+        'atma_testimonials_kicker' => [
+            'label'   => 'Nadtytuł',
+            'default' => 'OPINIE KLIENTÓW',
+            'type'    => 'text',
+        ],
+        'atma_testimonials_title' => [
+            'label'   => 'Tytuł',
+            'default' => 'Co mówią osoby po sesjach?',
+            'type'    => 'text',
+        ],
+        'atma_testimonials_description' => [
+            'label'   => 'Opis',
+            'default' => 'Każda historia jest inna, ale wszystkie łączy jedno — większy spokój, lekkość i głębszy kontakt ze sobą.',
+            'type'    => 'textarea',
+        ],
+        'atma_testimonial_1_text' => [
+            'label'   => 'Opinia 1 — Treść opinii',
+            'default' => 'To było naprawdę niesamowite doświadczenie.',
+            'type'    => 'textarea',
+        ],
+        'atma_testimonial_1_name' => [
+            'label'   => 'Opinia 1 — Imię i nazwisko',
+            'default' => 'Agata Nowak',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_1_city' => [
+            'label'   => 'Opinia 1 — Miejscowość',
+            'default' => 'Jelenia Góra',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_1_rating' => [
+            'label'   => 'Opinia 1 — Liczba gwiazdek',
+            'default' => 5,
+            'type'    => 'number',
+        ],
+        'atma_testimonial_2_text' => [
+            'label'   => 'Opinia 2 — Treść opinii',
+            'default' => 'Marzena to wspaniała terapeutka. Sesja była naprawdę mocna.',
+            'type'    => 'textarea',
+        ],
+        'atma_testimonial_2_name' => [
+            'label'   => 'Opinia 2 — Imię i nazwisko',
+            'default' => 'Stefan Koziński',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_2_city' => [
+            'label'   => 'Opinia 2 — Miejscowość',
+            'default' => 'Golub-Dobrzyń',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_2_rating' => [
+            'label'   => 'Opinia 2 — Liczba gwiazdek',
+            'default' => 5,
+            'type'    => 'number',
+        ],
+        'atma_testimonial_3_text' => [
+            'label'   => 'Opinia 3 — Treść opinii',
+            'default' => 'To była super sesja.',
+            'type'    => 'textarea',
+        ],
+        'atma_testimonial_3_name' => [
+            'label'   => 'Opinia 3 — Imię i nazwisko',
+            'default' => 'Anna Kowalska',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_3_city' => [
+            'label'   => 'Opinia 3 — Miejscowość',
+            'default' => 'Warszawa',
+            'type'    => 'text',
+        ],
+        'atma_testimonial_3_rating' => [
+            'label'   => 'Opinia 3 — Liczba gwiazdek',
+            'default' => 5,
+            'type'    => 'number',
+        ],
+    ];
+
+    foreach ($testimonials_settings as $setting_id => $setting) {
+        $sanitize_callback = $setting['type'] === 'number'
+            ? function ($value) {
+                return min(5, max(1, absint($value)));
+            }
+            : ($setting['type'] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field');
+
+        $wp_customize->add_setting($setting_id, [
+            'default'           => $setting['default'],
+            'sanitize_callback' => $sanitize_callback,
+        ]);
+
+        $control_args = [
+            'label'   => $setting['label'],
+            'section' => 'atma_testimonials',
+            'type'    => $setting['type'],
+        ];
+
+        if ($setting['type'] === 'number') {
+            $control_args['input_attrs'] = [
+                'min'  => 1,
+                'max'  => 5,
+                'step' => 1,
+            ];
+        }
+
+        $wp_customize->add_control($setting_id, $control_args);
+    }
+
 }
 
 add_action('customize_register', 'atma_customize_register');
